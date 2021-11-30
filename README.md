@@ -1,4 +1,10 @@
-# appetiser_app
+### Getting Started 🚀
+
+```sh
+git clone https://github.com/adnin/appetiser_app.git
+cd appetiser_app
+```
+
 
 ## Project setup
 ```
@@ -24,6 +30,3 @@ yarn test:unit
 ```
 yarn test:e2e
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
