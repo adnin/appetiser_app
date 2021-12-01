@@ -1,7 +1,6 @@
 import axios from "axios";
-import JwtService from "@/common/jwt.service";
-
 import { API_URL } from "@/common/config";
+import JwtService from "@/common/jwt.service";
 
 export const HTTP = axios.create({
   baseURL: API_URL,

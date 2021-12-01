@@ -6,6 +6,9 @@
       <h4 class="text-2xl font-bold mb-10 text-gray-500">
         Create Your Account
       </h4>
+      <div v-if="errors">
+        <ErrorMessage v-for="(v, k) in errors" :key="k" :message="v" />
+      </div>
       <div class="space-y-5">
         <div>
           <label for="email" class="block mb-1 font-bold">Email</label>
