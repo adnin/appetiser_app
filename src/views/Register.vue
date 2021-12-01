@@ -131,7 +131,7 @@ export default {
         this.$emit("submit", this.state);
         this.$store
           .dispatch(REGISTER, this.state)
-          .then(() => this.$router.push({ name: "Home" }));
+          .then(() => this.$router.push({ name: "Verification" }));
       }
     }
   }

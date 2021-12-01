@@ -15,6 +15,12 @@ const routes = [
     name: "Register",
     component: () => import("../views/Register.vue"),
     meta: { guest: true }
+  },
+  {
+    path: "/verification",
+    name: "Verification",
+    component: () => import("../views/Verification.vue"),
+    meta: { guest: true }
   }
 ];
 

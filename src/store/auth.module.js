@@ -6,8 +6,7 @@ import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 const state = {
   errors: null,
   user: {},
-  isAuthenticated: !!JwtService.getToken(),
-  isVerified
+  isAuthenticated: !!JwtService.getToken()
 };
 
 const getters = {
@@ -42,7 +41,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       ApiService.post("/auth/register", credentials)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data);
+          // context.commit(SET_AUTH, data);
           return resolve(data);
         })
         .catch(({ response }) => {
