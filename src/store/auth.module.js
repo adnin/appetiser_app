@@ -1,12 +1,18 @@
 import ApiService from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
-import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH } from "./actions.type";
-import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
+import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH, VERIFY } from "./actions.type";
+import {
+  SET_AUTH,
+  PURGE_AUTH,
+  SET_ERROR,
+  SET_TO_VERIFY
+} from "./mutations.type";
 
 const state = {
   errors: null,
   user: {},
-  isAuthenticated: !!JwtService.getToken()
+  isAuthenticated: !!JwtService.getToken(),
+  toVerify: false
 };
 
 const getters = {
@@ -15,6 +21,9 @@ const getters = {
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
+  },
+  toVerify(state) {
+    return state.toVerify;
   }
 };
 
@@ -33,6 +42,9 @@ const actions = {
           context.commit(SET_ERROR, response.data.errors);
         });
     });
+  },
+  [VERIFY](context, value) {
+    context.commit(SET_TO_VERIFY, value);
   },
   [LOGOUT](context) {
     context.commit(PURGE_AUTH);
@@ -75,6 +87,9 @@ const actions = {
 const mutations = {
   [SET_ERROR](state, error) {
     state.errors = error;
+  },
+  [SET_TO_VERIFY](state, value) {
+    state.toVerify = value;
   },
   [SET_AUTH](state, response) {
     state.isAuthenticated = true;

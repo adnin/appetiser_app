@@ -82,7 +82,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { REGISTER } from "@/store/actions.type";
+import { REGISTER, VERIFY } from "@/store/actions.type";
 
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
@@ -119,6 +119,9 @@ export default {
       v$
     };
   },
+  created() {
+    this.$store.dispatch(VERIFY, false);
+  },
   computed: {
     ...mapState({
       errors: (state) => state.auth.errors
@@ -129,9 +132,10 @@ export default {
       this.v$.$validate();
       if (!this.v$.error) {
         this.$emit("submit", this.state);
-        this.$store
-          .dispatch(REGISTER, this.state)
-          .then(() => this.$router.push({ name: "Verification" }));
+        this.$store.dispatch(REGISTER, this.state).then(() => {
+          this.$store.dispatch(VERIFY, true);
+          this.$router.push({ name: "Verification" });
+        });
       }
     }
   }
