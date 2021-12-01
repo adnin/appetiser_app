@@ -41,6 +41,10 @@ const actions = {
           if (!response) {
             return context.commit(SET_ERROR, null);
           }
+          if (!response.data.errors) {
+            context.commit(SET_ERROR, [response.data.message]);
+            return reject(response);
+          }
           context.commit(SET_ERROR, response.data.errors);
           return reject(response);
         });
@@ -61,7 +65,7 @@ const actions = {
             return context.commit(SET_ERROR, null);
           }
           if (!response.data.errors) {
-            context.commit(SET_ERROR, response.data.message);
+            context.commit(SET_ERROR, [response.data.message]);
             return reject(response);
           }
           context.commit(SET_ERROR, response.data.errors);

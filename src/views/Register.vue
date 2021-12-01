@@ -3,11 +3,11 @@
     class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div class="max-w-md w-full space-y-8">
-      <h4 class="text-2xl font-bold mb-10">Create Your Account</h4>
+      <h4 class="text-2xl font-bold">Create Your Account</h4>
       <div v-if="errors">
         <ErrorMessage v-for="(v, k) in errors" :key="k" :message="v" />
       </div>
-      <div class="space-y-5">
+      <div class="space-y-3">
         <div>
           <label for="email" class="block mb-1 font-bold">Email</label>
           <input
