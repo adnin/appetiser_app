@@ -83,12 +83,11 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { REGISTER, VERIFY } from "@/store/actions.type";
-
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
-import { reactive, computed, ref } from "vue";
+import { reactive, computed } from "vue";
 
+import { REGISTER, TO_VERIFY } from "@/store/actions.type";
 import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
@@ -124,7 +123,7 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: true
     };
   },
   created() {

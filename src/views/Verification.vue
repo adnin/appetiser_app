@@ -10,13 +10,12 @@
                 <span>We have sent a verification code to</span>
                 <span>your email address.</span>
               </div>
-              <VerificationInput :loading="false" v-on:complete="onComplete" />
-              <div class="flex justify-center text-center mt-3">
-                <a
-                  class="flex items-center text-purple-700 hover:text-purple-900 cursor-pointer"
-                  ><span class="font-bold">Verify &amp; Proceed</span
-                  ><i class="bx bx-caret-right ml-1"></i
-                ></a>
+              <VerificationInput
+                :loading="loading"
+                v-on:complete="onComplete"
+              />
+              <div class="mt-2" v-if="loading">
+                <Loader />
               </div>
             </div>
           </div>
@@ -27,9 +26,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
 import VerificationInput from "@/components/VerificationInput";
+import { VERIFY } from "@/store/actions.type";
 
 export default {
   name: "Verification",
@@ -38,9 +40,32 @@ export default {
     Loader,
     VerificationInput
   },
+  data() {
+    return {
+      loading: false
+    };
+  },
+  computed: {
+    ...mapState({
+      errors: (state) => state.auth.errors
+    })
+  },
   methods: {
     onComplete(v) {
-      console.log("onComplete ", v);
+      this.loading = true;
+      const VERIFY = {
+        token: v,
+        via: "email"
+      };
+      this.$store
+        .dispatch(VERIFY, this.state)
+        .then(() => {
+          this.loading = false;
+          this.$router.push({ name: "Login" });
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     }
   }
 };

@@ -3,21 +3,17 @@
     <input
       v-for="(v, index) in values"
       :key="`${id}-${index}`"
-      class="focus:outline-none m-2 border-2 border-purple-200 font-bold h-10 w-10 text-center form-control rounded"
+      class="focus:outline-none text-purple-700 m-2 border-2 border-purple-200 font-bold h-10 w-10 text-center form-control rounded"
       :type="type === 'number' ? 'tel' : type"
       :pattern="type === 'number' ? '[0-9]' : null"
       :autoFocus="autoFocus && !loading && index === autoFocusIndex"
-      :style="{
-        width: `${fieldWidth}px`,
-        height: `${fieldHeight}px`
-      }"
       :data-id="index"
       :value="v"
       :ref="iRefs[index]"
       v-on:input="onValueChange"
       v-on:focus="onFocus"
       v-on:keydown="onKeyDown"
-      :disabled="disabled"
+      :disabled="disabled || loading"
       :required="required"
       maxlength="1"
     />
@@ -42,7 +38,7 @@ export default {
     className: String,
     fields: {
       type: Number,
-      default: 6
+      default: 5
     },
     fieldWidth: {
       type: Number,
