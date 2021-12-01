@@ -68,6 +68,7 @@
         </div>
         <button
           @click="onSubmit"
+          id="register_button"
           class="block w-full bg-purple-600 p-4 rounded text-white"
         >
           Register
@@ -118,6 +119,7 @@ export default {
       this.v$.$validate();
       if (this.v$.error) {
       } else {
+        this.$emit("submit", this.state);
       }
     }
   }
