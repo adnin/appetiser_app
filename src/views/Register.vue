@@ -128,7 +128,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch(VERIFY, false);
+    this.$store.dispatch(TO_VERIFY, false);
   },
   computed: {
     ...mapState({
@@ -145,7 +145,7 @@ export default {
           .dispatch(REGISTER, this.state)
           .then(() => {
             this.loading = false;
-            this.$store.dispatch(VERIFY, true);
+            this.$store.dispatch(TO_VERIFY, true);
             this.$router.push({ name: "Verification" });
           })
           .catch(() => {

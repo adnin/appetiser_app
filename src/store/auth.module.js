@@ -1,6 +1,13 @@
 import ApiService from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
-import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH, VERIFY } from "./actions.type";
+import {
+  LOGIN,
+  LOGOUT,
+  REGISTER,
+  CHECK_AUTH,
+  TO_VERIFY,
+  VERIFY
+} from "./actions.type";
 import {
   SET_AUTH,
   PURGE_AUTH,
@@ -43,17 +50,31 @@ const actions = {
         });
     });
   },
-  [VERIFY](context, value) {
+  [TO_VERIFY](context, value) {
     context.commit(SET_TO_VERIFY, value);
   },
   [LOGOUT](context) {
     context.commit(PURGE_AUTH);
   },
+  [VERIFY](context, verification) {
+    return new Promise((resolve, reject) => {
+      ApiService.post("/auth/verification/verify", verification)
+        .then(({ data }) => {
+          return resolve(data);
+        })
+        .catch(({ response }) => {
+          if (!response) {
+            return context.commit(SET_ERROR, null);
+          }
+          context.commit(SET_ERROR, response.data.errors);
+          return reject(response);
+        });
+    });
+  },
   [REGISTER](context, credentials) {
     return new Promise((resolve, reject) => {
       ApiService.post("/auth/register", credentials)
         .then(({ data }) => {
-          // context.commit(SET_AUTH, data);
           return resolve(data);
         })
         .catch(({ response }) => {
