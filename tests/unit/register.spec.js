@@ -1,9 +1,17 @@
 import { mount } from "@vue/test-utils";
+
 import Register from "@/views/Register.vue";
+
+import store from "@/store";
 
 describe("Register.vue", () => {
   test("submits a form", async () => {
-    const wrapper = mount(Register);
+    const wrapper = mount(Register, {
+      global: {
+        plugins: [store]
+      }
+    });
+
     const email = "adninonofre@gmail.com";
     const full_name = "Adnin Onofre";
     const password = "password";

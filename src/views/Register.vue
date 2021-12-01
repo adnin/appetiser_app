@@ -76,6 +76,19 @@
         >
           Register
         </button>
+        <div v-if="loading" class="flex justify-center items-center">
+          <div class="loader bg-purple-100 p-3 rounded-full flex space-x-3">
+            <div
+              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
+            ></div>
+            <div
+              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
+            ></div>
+            <div
+              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -86,7 +99,7 @@ import { REGISTER, VERIFY } from "@/store/actions.type";
 
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 
 import ErrorMessage from "@/components/ErrorMessage";
 
@@ -119,6 +132,11 @@ export default {
       v$
     };
   },
+  data() {
+    return {
+      loading: false
+    };
+  },
   created() {
     this.$store.dispatch(VERIFY, false);
   },
@@ -130,12 +148,19 @@ export default {
   methods: {
     onSubmit() {
       this.v$.$validate();
-      if (!this.v$.error) {
+      if (!this.v$.$error) {
+        this.loading = true;
         this.$emit("submit", this.state);
-        this.$store.dispatch(REGISTER, this.state).then(() => {
-          this.$store.dispatch(VERIFY, true);
-          this.$router.push({ name: "Verification" });
-        });
+        this.$store
+          .dispatch(REGISTER, this.state)
+          .then(() => {
+            this.loading = false;
+            this.$store.dispatch(VERIFY, true);
+            this.$router.push({ name: "Verification" });
+          })
+          .catch(() => {
+            this.loading = false;
+          });
       }
     }
   }
