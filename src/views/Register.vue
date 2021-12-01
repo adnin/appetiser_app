@@ -78,6 +78,9 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import { REGISTER } from "@/store/actions.type";
+
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
@@ -113,12 +116,19 @@ export default {
       v$
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      errors: (state) => state.auth.errors
+    })
+  },
   methods: {
     onSubmit() {
       this.v$.$validate();
       if (!this.v$.error) {
         this.$emit("submit", this.state);
+        this.$store
+          .dispatch(REGISTER, this.state)
+          .then(() => this.$router.push({ name: "Home" }));
       }
     }
   }

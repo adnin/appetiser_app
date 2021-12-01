@@ -1,11 +1,6 @@
 import ApiService from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
-import {
-  LOGIN,
-  LOGOUT,
-  REGISTER,
-  CHECK_AUTH,
-} from "./actions.type";
+import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH } from "./actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 const state = {
@@ -25,8 +20,8 @@ const getters = {
 
 const actions = {
   [LOGIN](context, credentials) {
-    return new Promise(resolve => {
-      ApiService.post("/auth/login", { user: credentials })
+    return new Promise((resolve) => {
+      ApiService.post("/auth/login", credentials)
         .then(({ data }) => {
           context.commit(SET_AUTH, data.user);
           resolve(data);
@@ -41,7 +36,7 @@ const actions = {
   },
   [REGISTER](context, credentials) {
     return new Promise((resolve, reject) => {
-      ApiService.post("/auth/register", { user: credentials })
+      ApiService.post("/auth/register", credentials)
         .then(({ data }) => {
           context.commit(SET_AUTH, data.user);
           resolve(data);
@@ -65,7 +60,7 @@ const actions = {
     } else {
       context.commit(PURGE_AUTH);
     }
-  },
+  }
 };
 
 const mutations = {

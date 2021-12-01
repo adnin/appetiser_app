@@ -28,7 +28,32 @@
           <div class="text-2xl py-3 font-bold text-gray-700">Register</div>
         </div>
         <div class="flex pt-3 text-gray-600">
-          <button type="submit" class="absolute right-0 top-0 mt-5 mr-5">
+          <button
+            v-if="isLoggedIn"
+            @click="logout"
+            type="submit"
+            class="absolute right-0 top-0 mt-5 mr-5"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-red-600 hover:text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+          </button>
+          <button
+            v-else
+            @click="login"
+            class="absolute right-0 top-0 mt-5 mr-5"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6 text-blue-600 hover:text-blue-500"
@@ -52,6 +77,20 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  computed: {
+    isLoggedIn: function () {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("LogOut");
+      this.$router.push("/login");
+    },
+    login() {
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
