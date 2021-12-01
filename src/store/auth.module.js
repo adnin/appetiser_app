@@ -6,7 +6,8 @@ import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 const state = {
   errors: null,
   user: {},
-  isAuthenticated: !!JwtService.getToken()
+  isAuthenticated: !!JwtService.getToken(),
+  isVerified
 };
 
 const getters = {
