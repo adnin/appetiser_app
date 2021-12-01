@@ -14,6 +14,8 @@ import {
   SET_ERROR,
   SET_TO_VERIFY
 } from "./mutations.type";
+import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH } from "./actions.type";
+import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 const state = {
   errors: null,
