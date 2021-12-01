@@ -3,4 +3,4 @@ export const LOGIN = "login";
 export const LOGOUT = "logout";
 export const REGISTER = "register";
 export const VERIFY = "verify";
-export const TO_VERIFY = "toVerify";
+export const SET_TOKEN = "set_token";

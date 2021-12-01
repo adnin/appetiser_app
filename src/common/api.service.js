@@ -5,7 +5,7 @@ import JwtService from "@/common/jwt.service";
 export const HTTP = axios.create({
   baseURL: API_URL,
   headers: {
-    Authorization: `${JwtService.getToken()}`
+    Authorization: `Bearer ${JwtService.getToken()}`
   }
 });
 
