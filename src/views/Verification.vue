@@ -34,7 +34,7 @@ import { mapState } from "vuex";
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
 import VerificationInput from "@/components/VerificationInput";
-import { VERIFY } from "@/store/actions.type";
+import { VERIFY, LOGOUT } from "@/store/actions.type";
 
 export default {
   name: "Verification",
@@ -64,6 +64,7 @@ export default {
         .dispatch(VERIFY, verification_code)
         .then(() => {
           this.loading = false;
+          this.$store.dispatch(LOGOUT);
           this.$router.push({ name: "Login" });
         })
         .catch(() => {

@@ -87,7 +87,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
-import { REGISTER } from "@/store/actions.type";
+import { REGISTER, LOGOUT } from "@/store/actions.type";
 import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
@@ -131,6 +131,9 @@ export default {
       errors: (state) => state.auth.errors
     })
   },
+  created() {
+    this.$store.dispatch(LOGOUT);
+  },
   methods: {
     onSubmit() {
       this.v$.$validate();
@@ -141,7 +144,6 @@ export default {
           .dispatch(REGISTER, this.state)
           .then(() => {
             this.loading = false;
-            this.$store.dispatch(TO_VERIFY, true);
             this.$router.push({ name: "Verification" });
           })
           .catch(() => {

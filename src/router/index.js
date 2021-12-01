@@ -26,7 +26,7 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
-    meta: { toVerify: true }
+    meta: { guest: true }
   }
 ];
 
@@ -49,6 +49,7 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   // toVerify for verification page
+  console.log(store.getters.hasToken);
   if (to.matched.some((record) => record.meta.toVerify)) {
     if (store.getters.hasToken) {
       next();
