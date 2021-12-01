@@ -3,18 +3,29 @@ import { API_URL } from "@/common/config";
 import JwtService from "@/common/jwt.service";
 
 export const HTTP = axios.create({
-  baseURL: API_URL,
-  headers: {
-    Authorization: `Bearer ${JwtService.getToken()}`
-  }
+  baseURL: API_URL
 });
+
+HTTP.interceptors.request.use(
+  (config) => {
+    const token = JwtService.getToken();
+
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 axios.interceptors.response.use(undefined, function (error) {
   if (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      store.dispatch("LogOut");
+      store.dispatch("logout");
       return router.push("/login");
     }
   }

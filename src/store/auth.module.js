@@ -25,23 +25,28 @@ const getters = {
     return state.isAuthenticated;
   },
   hasToken(state) {
-    return state.isAuthenticated;
+    return state.hasToken;
   }
 };
 
 const actions = {
   [LOGIN](context, credentials) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       ApiService.post("/auth/login", credentials)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data.user);
+          context.commit(SET_AUTH, data);
           resolve(data);
         })
         .catch(({ response }) => {
           if (!response) {
             return context.commit(SET_ERROR, null);
           }
+          if (!response.data.errors) {
+            context.commit(SET_ERROR, [response.data.message]);
+            return reject(response);
+          }
           context.commit(SET_ERROR, response.data.errors);
+          return reject(response);
         });
     });
   },
@@ -60,7 +65,7 @@ const actions = {
             return context.commit(SET_ERROR, null);
           }
           if (!response.data.errors) {
-            context.commit(SET_ERROR, response.data.message);
+            context.commit(SET_ERROR, [response.data.message]);
             return reject(response);
           }
           context.commit(SET_ERROR, response.data.errors);
@@ -117,6 +122,7 @@ const mutations = {
     state.errors = {};
     state.isAuthenticated = false;
     state.hasToken = true;
+    console.log(state.hasToken, response);
     JwtService.saveToken(response.data.access_token);
   },
   [PURGE_AUTH](state) {

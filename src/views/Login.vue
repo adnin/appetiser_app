@@ -9,18 +9,18 @@
       </div>
       <div class="space-y-5">
         <div>
-          <label for="email" class="block mb-1 font-bold">Email</label>
+          <label for="username" class="block mb-1 font-bold">Username</label>
           <input
-            id="email"
+            id="username"
             type="text"
-            v-model="state.email"
+            v-model="state.username"
             class="w-full border-2 border-purple-200 p-2 rounded-lg outline-none focus:border-purple-500"
           />
           <div
             class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
-            v-if="v$.email.$error"
+            v-if="v$.username.$error"
           >
-            <ErrorMessage message="You must enter a valid email." />
+            <ErrorMessage message="You must enter a valid username." />
           </div>
         </div>
         <div>
@@ -45,6 +45,18 @@
         >
           Login
         </button>
+        <div class="flex justify-center w-full">
+          <span
+            >Not a member?
+            <a
+              href="#"
+              @click="register"
+              class="text-indigo-600 hover:text-indigo-500"
+            >
+              Register
+            </a></span
+          >
+        </div>
         <div v-if="loading">
           <Loader />
         </div>
@@ -55,7 +67,7 @@
 <script>
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
-import { required, email, sameAs } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
 import { LOGIN } from "@/store/actions.type";
@@ -70,18 +82,14 @@ export default {
   },
   setup() {
     const state = reactive({
-      email: "",
-      full_name: "",
-      password: "",
-      password_confirmation: ""
+      username: "",
+      password: ""
     });
 
     const rules = computed(() => {
       return {
-        email: { required, email },
-        full_name: { required },
-        password: { required },
-        password_confirmation: { sameAs: sameAs(state.password) }
+        username: { required },
+        password: { required }
       };
     });
 
@@ -112,13 +120,15 @@ export default {
           .dispatch(LOGIN, this.state)
           .then(() => {
             this.loading = false;
-            this.$store.dispatch(TO_VERIFY, true);
-            this.$router.push({ name: "Verification" });
+            this.$router.push({ name: "Home" });
           })
           .catch(() => {
             this.loading = false;
           });
       }
+    },
+    register() {
+      this.$router.push("/register");
     }
   }
 };
