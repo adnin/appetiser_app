@@ -1,11 +1,6 @@
 import ApiService from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
-import {
-  LOGIN,
-  LOGOUT,
-  REGISTER,
-  CHECK_AUTH,
-} from "./actions.type";
+import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH } from "./actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 const state = {
@@ -25,13 +20,16 @@ const getters = {
 
 const actions = {
   [LOGIN](context, credentials) {
-    return new Promise(resolve => {
-      ApiService.post("/auth/login", { user: credentials })
+    return new Promise((resolve) => {
+      ApiService.post("/auth/login", credentials)
         .then(({ data }) => {
           context.commit(SET_AUTH, data.user);
           resolve(data);
         })
         .catch(({ response }) => {
+          if (!response) {
+            return context.commit(SET_ERROR, null);
+          }
           context.commit(SET_ERROR, response.data.errors);
         });
     });
@@ -41,14 +39,17 @@ const actions = {
   },
   [REGISTER](context, credentials) {
     return new Promise((resolve, reject) => {
-      ApiService.post("/auth/register", { user: credentials })
+      ApiService.post("/auth/register", credentials)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data.user);
-          resolve(data);
+          context.commit(SET_AUTH, data);
+          return resolve(data);
         })
         .catch(({ response }) => {
+          if (!response) {
+            return context.commit(SET_ERROR, null);
+          }
           context.commit(SET_ERROR, response.data.errors);
-          reject(response);
+          return reject(response);
         });
     });
   },
@@ -60,23 +61,26 @@ const actions = {
           context.commit(SET_AUTH, data.user);
         })
         .catch(({ response }) => {
+          if (!response) {
+            return context.commit(SET_ERROR, null);
+          }
           context.commit(SET_ERROR, response.data.errors);
         });
     } else {
       context.commit(PURGE_AUTH);
     }
-  },
+  }
 };
 
 const mutations = {
   [SET_ERROR](state, error) {
     state.errors = error;
   },
-  [SET_AUTH](state, user) {
+  [SET_AUTH](state, response) {
     state.isAuthenticated = true;
-    state.user = user;
+    state.user = response.data;
     state.errors = {};
-    JwtService.saveToken(state.user.token);
+    JwtService.saveToken(response.data.access_token);
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
