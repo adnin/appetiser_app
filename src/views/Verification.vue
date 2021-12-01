@@ -6,7 +6,10 @@
           <div class="w-full">
             <div class="bg-white h-70 py-3 rounded text-center">
               <h1 class="text-2xl font-bold">Enter your verification code</h1>
-              <div class="flex flex-col mt-4">
+              <div class="flex text-center justify-center" v-if="errors">
+                <ErrorMessage v-for="(v, k) in errors" :key="k" :message="v" />
+              </div>
+              <div class="flex flex-col mt-2">
                 <span>We have sent a verification code to</span>
                 <span>your email address.</span>
               </div>
@@ -53,12 +56,12 @@ export default {
   methods: {
     onComplete(v) {
       this.loading = true;
-      const VERIFY = {
+      const verification_code = {
         token: v,
         via: "email"
       };
       this.$store
-        .dispatch(VERIFY, this.state)
+        .dispatch(VERIFY, verification_code)
         .then(() => {
           this.loading = false;
           this.$router.push({ name: "Login" });

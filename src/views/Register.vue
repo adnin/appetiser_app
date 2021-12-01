@@ -87,7 +87,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
-import { REGISTER, TO_VERIFY } from "@/store/actions.type";
+import { REGISTER } from "@/store/actions.type";
 import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
@@ -123,11 +123,8 @@ export default {
   },
   data() {
     return {
-      loading: true
+      loading: false
     };
-  },
-  created() {
-    this.$store.dispatch(TO_VERIFY, false);
   },
   computed: {
     ...mapState({
