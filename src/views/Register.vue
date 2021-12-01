@@ -117,8 +117,7 @@ export default {
   methods: {
     onSubmit() {
       this.v$.$validate();
-      if (this.v$.error) {
-      } else {
+      if (!this.v$.error) {
         this.$emit("submit", this.state);
       }
     }
