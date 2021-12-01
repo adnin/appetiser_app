@@ -24,9 +24,6 @@
             <span class="font-bold">User Registration System</span>
           </a>
         </div>
-        <div class="hidden md:flex item-center space-x-1">
-          <div class="text-2xl py-3 font-bold text-gray-700">Register</div>
-        </div>
         <div class="flex pt-3 text-gray-600">
           <button
             v-if="isLoggedIn"
