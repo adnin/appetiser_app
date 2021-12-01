@@ -3,9 +3,7 @@
     class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div class="max-w-md w-full space-y-8">
-      <h4 class="text-2xl font-bold mb-10 text-gray-500">
-        Create Your Account
-      </h4>
+      <h4 class="text-2xl font-bold mb-10">Create Your Account</h4>
       <div v-if="errors">
         <ErrorMessage v-for="(v, k) in errors" :key="k" :message="v" />
       </div>
@@ -16,7 +14,7 @@
             id="email"
             type="text"
             v-model="state.email"
-            class="w-full border-2 border-gray-200 p-2 rounded-lg outline-none focus:border-purple-500"
+            class="w-full border-2 border-purple-200 p-2 rounded-lg outline-none focus:border-purple-500"
           />
           <div
             class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
@@ -31,7 +29,7 @@
             id="full_name"
             type="text"
             v-model="state.full_name"
-            class="w-full border-2 border-gray-200 p-2 rounded-lg outline-none focus:border-purple-500"
+            class="w-full border-2 border-purple-200 p-2 rounded-lg outline-none focus:border-purple-500"
           />
           <div
             class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
@@ -46,7 +44,7 @@
             id="password"
             type="password"
             v-model="state.password"
-            class="w-full border-2 border-gray-200 p-2 rounded-lg outline-none focus:border-purple-500"
+            class="w-full border-2 border-purple-200 p-2 rounded-lg outline-none focus:border-purple-500"
           />
           <div
             class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
@@ -63,7 +61,7 @@
             id="password_confirmation"
             type="password"
             v-model="state.password_confirmation"
-            class="w-full border-2 border-gray-200 p-2 rounded-lg outline-none focus:border-purple-500"
+            class="w-full border-2 border-purple-200 p-2 rounded-lg outline-none focus:border-purple-500"
           />
           <div v-if="v$.password_confirmation.$error">
             <ErrorMessage message="Password confirmation does not match." />
@@ -72,22 +70,12 @@
         <button
           @click="onSubmit"
           id="register_button"
-          class="block w-full bg-purple-600 p-4 rounded text-white"
+          class="block w-full bg-purple-600 p-4 rounded text-white font-bold"
         >
           Register
         </button>
-        <div v-if="loading" class="flex justify-center items-center">
-          <div class="loader bg-purple-100 p-3 rounded-full flex space-x-3">
-            <div
-              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
-            ></div>
-            <div
-              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
-            ></div>
-            <div
-              class="w-3 h-3 bg-purple-500 rounded-full animate-bounce"
-            ></div>
-          </div>
+        <div v-if="loading">
+          <Loader />
         </div>
       </div>
     </div>
@@ -102,11 +90,13 @@ import { required, email, sameAs } from "@vuelidate/validators";
 import { reactive, computed, ref } from "vue";
 
 import ErrorMessage from "@/components/ErrorMessage";
+import Loader from "@/components/Loader";
 
 export default {
   name: "Register",
   components: {
-    ErrorMessage
+    ErrorMessage,
+    Loader
   },
   setup() {
     const state = reactive({
