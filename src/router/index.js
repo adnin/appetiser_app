@@ -15,6 +15,12 @@ const routes = [
     name: "Register",
     component: () => import("../views/Register.vue"),
     meta: { guest: true }
+  },
+  {
+    path: "/verification",
+    name: "Verification",
+    component: () => import("../views/Verification.vue"),
+    meta: { guest: true }
   }
 ];
 
@@ -36,8 +42,22 @@ router.beforeEach((to, from, next) => {
 });
 
 router.beforeEach((to, from, next) => {
+  // toVerify for verification page
+  if (to.matched.some((record) => record.meta.toVerify)) {
+    console.log(store.getters.toVerify);
+    if (store.getters.toVerify) {
+      next();
+      return;
+    }
+    next("/register");
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
-    if (store.getters.isAuthenticated) {
+    if (store.getters.isAuthenticated && store.getters.toVerify) {
       next("/");
       return;
     }
