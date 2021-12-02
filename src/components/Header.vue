@@ -26,7 +26,7 @@
         </div>
         <div class="flex pt-3 text-gray-600">
           <button
-            v-if="isLoggedIn"
+            v-if="isAuthenticated"
             @click="logout"
             type="submit"
             class="flex absolute right-0 top-0 mt-5 mr-5"
@@ -48,7 +48,7 @@
             </svg>
           </button>
           <button
-            v-else-if="this.$route.name !== 'Login'"
+            v-else-if="this.$route.name !== 'Login' && currentUser !== {}"
             @click="login"
             class="flex absolute right-0 top-0 mt-5 mr-5"
           >
@@ -75,16 +75,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Header",
   computed: {
-    isLoggedIn: function () {
-      return (
-        this.$store.getters.isAuthenticated &&
-        this.$store.getters.currentUser &&
-        Object.keys(this.$store.getters.currentUser).length > 0
-      );
-    }
+    ...mapGetters(["currentUser", "isAuthenticated"])
   },
   methods: {
     async logout() {

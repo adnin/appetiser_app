@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "@/common/config";
 import JwtService from "@/common/jwt.service";
+import { LOGOUT } from "../store/actions.type";
 
 export const HTTP = axios.create({
   baseURL: API_URL
@@ -20,14 +21,13 @@ HTTP.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(undefined, function (error) {
+HTTP.interceptors.response.use(undefined, function (error) {
   if (error) {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      store.dispatch("logout");
-      return router.push("/login");
+    const httpError = JSON.parse(JSON.stringify(error));
+    if (httpError.status === 401) {
+      window.location.replace("/login");
     }
+    return Promise.reject(error);
   }
 });
 
