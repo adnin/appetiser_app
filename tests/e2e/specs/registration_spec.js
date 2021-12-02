@@ -26,10 +26,7 @@ describe("Registration", () => {
     cy.contains("h1", "Enter your verification code");
     // test data
     const token = "00000";
-    const payload = {
-      token: token,
-      via: "email"
-    };
+
     const splitToken = token.split("");
     // fields
     cy.get('[data-id="0"]').type(splitToken[0]);
