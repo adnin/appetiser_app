@@ -54,7 +54,7 @@
           </div>
         </div>
         <div>
-          <label for="confirm_password" class="block mb-1 font-bold"
+          <label for="password_confirmation" class="block mb-1 font-bold"
             >Confirm Password</label
           >
           <input

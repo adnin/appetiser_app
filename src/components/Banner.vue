@@ -20,7 +20,7 @@
             </svg>
           </span>
           <p class="ml-3 font-medium text-white truncate">
-            <span class="md:inline">
+            <span id="banner_message" class="md:inline">
               {{ message }}
             </span>
           </p>
