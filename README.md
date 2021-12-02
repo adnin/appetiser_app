@@ -7,7 +7,7 @@
   [Axios](https://axios-http.com/docs/intro), [tailwindcss](https://tailwindcss.com/),
   [Vuelidate](https://vuelidate.js.org/)
 - [Cypress](https://www.cypress.io/), [Babel](https://babeljs.io/),
-  [Prettier](https://prettier.io/),[Jest](https://jestjs.io/), 
+  [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), 
   [Yarn](https://yarnpkg.com/)
 
 ### Getting Started 🚀
