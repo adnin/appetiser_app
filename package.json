@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --host localhost",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e --headless --record --key fc2b013e-d1b3-4e68-b7c1-d63605d8bc18"
+    "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.17",
