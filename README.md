@@ -5,7 +5,7 @@
 
 ## Tech Stack
 - [Vue](https://vuejs.org/), [Vuex](https://vuex.vuejs.org/),
-  [Axios](https://axios-http.com/docs/intro), [tailwindcss](https://tailwindcss.com/)
+  [Axios](https://axios-http.com/docs/intro), [tailwindcss](https://tailwindcss.com/),
   [Vuelidate](https://vuelidate.js.org/)
 - [Cypress](https://www.cypress.io/), [Babel](https://babeljs.io/),
   [Prettier](https://prettier.io/),[Jest](https://jestjs.io/), 
