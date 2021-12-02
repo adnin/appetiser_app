@@ -8,7 +8,7 @@ import {
   VERIFY,
   SET_TOKEN
 } from "./actions.type";
-import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
+import { SET_AUTH, PURGE_AUTH, SET_ERROR, SET_PROFILE } from "./mutations.type";
 
 const state = {
   errors: null,
@@ -91,10 +91,9 @@ const actions = {
   },
   [CHECK_AUTH](context) {
     if (JwtService.getToken()) {
-      ApiService.setHeader();
-      ApiService.get("/users")
+      ApiService.get("/auth/profile")
         .then(({ data }) => {
-          context.commit(SET_AUTH, data.user);
+          context.commit(SET_PROFILE, data);
         })
         .catch(({ response }) => {
           if (!response) {
@@ -117,6 +116,10 @@ const mutations = {
     state.user = response.data;
     state.errors = {};
     JwtService.saveToken(response.data.access_token);
+  },
+  [SET_PROFILE](state, response) {
+    state.isAuthenticated = true;
+    state.user = response.data;
   },
   [SET_TOKEN](state, response) {
     state.errors = {};

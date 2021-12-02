@@ -14,10 +14,22 @@
 </template>
 
 <script>
+import { CHECK_AUTH, LOGOUT } from "@/store/actions.type";
+
 import Banner from "@/components/Banner";
 
 export default {
   name: "Home",
-  components: { Banner }
+  components: { Banner },
+  beforeCreate() {
+    this.$store
+      .dispatch(CHECK_AUTH)
+      .then()
+      .catch(() => {
+        this.$store.dispatch(LOGOUT);
+        this.$router.push({ name: "Login" });
+        this.loading = false;
+      });
+  }
 };
 </script>
