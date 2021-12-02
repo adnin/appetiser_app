@@ -38,6 +38,7 @@ const actions = {
           resolve(data);
         })
         .catch(({ response }) => {
+          console.log(response);
           if (!response) {
             return context.commit(SET_ERROR, null);
           }
@@ -125,7 +126,6 @@ const mutations = {
     state.errors = {};
     state.isAuthenticated = false;
     state.hasToken = true;
-    console.log(state.hasToken, response);
     JwtService.saveToken(response.data.access_token);
   },
   [PURGE_AUTH](state) {

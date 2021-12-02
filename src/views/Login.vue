@@ -70,7 +70,7 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 
-import { LOGIN } from "@/store/actions.type";
+import { LOGIN, LOGOUT } from "@/store/actions.type";
 import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
@@ -79,6 +79,9 @@ export default {
   components: {
     ErrorMessage,
     Loader
+  },
+  beforeCreate() {
+    this.$store.dispatch(LOGOUT);
   },
   setup() {
     const state = reactive({

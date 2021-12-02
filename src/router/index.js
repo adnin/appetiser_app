@@ -49,7 +49,6 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   // toVerify for verification page
-  console.log(store.getters.hasToken);
   if (to.matched.some((record) => record.meta.toVerify)) {
     if (store.getters.hasToken) {
       next();
