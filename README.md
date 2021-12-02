@@ -1,4 +1,3 @@
-
 # User Registration System
 
 ![Alt Text](https://github.com/adnin/appetiser_app/blob/main/screenshots/registration_spec_gif.gif)
@@ -9,8 +8,7 @@
   [Vuelidate](https://vuelidate.js.org/)
 - [Cypress](https://www.cypress.io/), [Babel](https://babeljs.io/),
   [Prettier](https://prettier.io/),[Jest](https://jestjs.io/), 
-  [Yarn](https://yarnpkg.com/),
-
+  [Yarn](https://yarnpkg.com/)
 
 ### Getting Started 🚀
 
@@ -18,7 +16,6 @@
 git clone https://github.com/adnin/appetiser_app.git
 cd appetiser_app
 ```
-
 
 ## Project setup
 ```
