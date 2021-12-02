@@ -1,5 +1,7 @@
 ### Getting Started 🚀
 
+![Alt Text](https://github.com/adnin/appetiser_app/blob/main/screenshots/registration_spec_gif.gif)
+
 ```sh
 git clone https://github.com/adnin/appetiser_app.git
 cd appetiser_app
