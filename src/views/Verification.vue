@@ -17,6 +17,13 @@
                 :loading="loading"
                 v-on:complete="onComplete"
               />
+              <button
+                @click="onSubmit"
+                id="register_button"
+                class="block w-full bg-purple-600 p-4 rounded text-white font-bold"
+              >
+                Login
+              </button>
               <div class="mt-2" v-if="loading">
                 <Loader />
               </div>

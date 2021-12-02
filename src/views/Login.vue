@@ -40,7 +40,7 @@
         </div>
         <button
           @click="onSubmit"
-          id="register_button"
+          id="login_button"
           class="block w-full bg-purple-600 p-4 rounded text-white font-bold"
         >
           Login
